@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#1E40AF">
+  <meta name="description" content="專為日本現場採買打造的離線優先 PWA 清單與委託結帳工具">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>日本代購離線清單</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./assets/icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./assets/icons/icon-192.png">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <!-- ==================== 分頁 1：代購清單 ==================== -->
+    <section id="view-list" class="view active" aria-label="代購清單">
+      <header class="sticky-header">
+        <div class="header-top">
+          <div class="brand-area">
+            <h1 class="app-title">日本代購清單</h1>
+            <div class="header-badges">
+              <span id="progress-badge" class="badge badge-primary">已買 0 / 0</span>
+              <span id="network-badge" class="badge badge-online" title="目前連線狀態">連線中</span>
+            </div>
+          </div>
+          <div class="header-actions">
+            <button id="btn-header-precache" type="button" class="chip-action" title="預載全部離線商品圖片">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="header-cache-text">離線 0/0</span>
+            </button>
+            <button id="btn-theme-toggle" type="button" class="icon-btn" aria-label="切換深淺主題" title="切換深淺主題">
+              <svg id="icon-theme" class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="segmented-control" role="tablist" aria-label="購買狀態篩選">
+          <button type="button" class="seg-btn active" data-status="unpurchased" role="tab" aria-selected="true">未購買</button>
+          <button type="button" class="seg-btn" data-status="all" role="tab" aria-selected="false">全部</button>
+          <button type="button" class="seg-btn" data-status="purchased" role="tab" aria-selected="false">已購買</button>
+        </div>
+
+        <div id="store-filter-bar" class="store-pills" role="region" aria-label="店家篩選"></div>
+
+        <div class="search-row">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <input id="search-input" type="search" placeholder="搜尋商品名稱、委託人、備註..." autocomplete="off" enterkeyhint="search">
+            <button id="btn-clear-search" type="button" class="clear-search-btn hidden" aria-label="清除搜尋">&times;</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="list-content">
+        <div id="list-summary-line" class="list-summary-line"></div>
+        <div id="item-list" class="item-list"></div>
+        <div id="empty-state" class="empty-state hidden">
+          <div class="empty-icon">🛍️</div>
+          <p id="empty-state-msg" class="empty-msg">目前沒有符合條件的商品</p>
+          <button id="btn-reset-filters" type="button" class="btn btn-secondary">清除篩選條件</button>
+        </div>
+      </main>
+
+      <button id="btn-fab-add" type="button" class="fab" aria-label="新增額外代購">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <span>額外代購</span>
+      </button>
+    </section>
+
+    <!-- ==================== 分頁 2：結帳統計 ==================== -->
+    <section id="view-checkout" class="view" aria-label="結帳統計">
+      <header class="page-header">
+        <h1 class="page-title">結帳統計與收費</h1>
+      </header>
+
+      <main class="page-content">
+        <section class="card rate-card">
+          <div class="rate-row">
+            <div>
+              <label for="input-exchange-rate" class="field-label">日圓匯率（1 JPY → TWD）</label>
+              <p class="field-hint">依單品小計無條件進位計算，無手續費／代購費</p>
+            </div>
+            <div class="rate-input-wrap">
+              <input id="input-exchange-rate" type="number" inputmode="decimal" step="0.001" min="0.001" class="rate-input">
+              <button id="btn-reset-rate" type="button" class="btn btn-ghost btn-sm">預設</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-dashboard" aria-label="總花費儀表板">
+          <div class="stat-box">
+            <span class="stat-label">已購品項 / 件數</span>
+            <strong id="stat-count" class="stat-value">0 項 / 0 件</strong>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">總花費日圓</span>
+            <strong id="stat-jpy" class="stat-value stat-jpy">¥0</strong>
+          </div>
+          <div class="stat-box stat-box-accent">
+            <span class="stat-label">預估總台幣</span>
+            <strong id="stat-twd" class="stat-value">NT$0</strong>
+          </div>
+        </section>
+
+        <div id="missing-price-alert" class="alert-banner hidden">
+          <span>⚠️ 尚有 <strong id="missing-price-count">0</strong> 項已買商品未填寫實付單價，點下方明細可補填。</span>
+        </div>
+
+        <section class="export-actions-bar">
+          <button id="btn-copy-all-line" type="button" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            <span>複製 LINE 收費明細</span>
+          </button>
+          <button id="btn-preview-line" type="button" class="btn btn-secondary">預覽文字</button>
+          <button id="btn-export-csv" type="button" class="btn btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M14 2v6h6M8 13h8M8 17h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>匯出 CSV</span>
+          </button>
+        </section>
+
+        <section id="requester-groups" class="requester-groups"></section>
+      </main>
+    </section>
+
+    <!-- ==================== 分頁 3：備份與匯入 ==================== -->
+    <section id="view-settings" class="view" aria-label="備份與設定">
+      <header class="page-header">
+        <h1 class="page-title">離線與資料管理</h1>
+      </header>
+
+      <main class="page-content">
+        <section class="card">
+          <h2 class="card-title">離線快取與清單更新</h2>
+          <div class="info-grid">
+            <div class="info-row">
+              <span class="info-label">目前清單版本</span>
+              <strong id="settings-version">-</strong>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Service Worker</span>
+              <strong id="settings-sw-status">檢查中...</strong>
+            </div>
+            <div class="info-row">
+              <span class="info-label">商品圖片快取</span>
+              <strong id="settings-cache-progress">0 / 0</strong>
+            </div>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="settings-cache-bar" class="progress-fill" style="width: 0%"></div>
+          </div>
+          <div class="btn-stack">
+            <button id="btn-check-update" type="button" class="btn btn-primary">
+              <span>🔄 檢查清單更新（無損合併）</span>
+            </button>
+            <button id="btn-precache-all" type="button" class="btn btn-secondary">
+              <span>📥 預載離線包（全部商品圖片）</span>
+            </button>
+          </div>
+          <p class="field-hint">主程式與清單採 Network-First（連網自動抓新版），商品圖片採 Cache-First（零流量極速顯示）。</p>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title">資料安全備份與匯入</h2>
+          <div class="btn-stack">
+            <button id="btn-export-backup" type="button" class="btn btn-primary">
+              <span>💾 匯出完整 JSON 備份（含現場照片）</span>
+            </button>
+            <button id="btn-import-json" type="button" class="btn btn-secondary">
+              <span>📤 匯入 JSON（更新清單或還原備份）</span>
+            </button>
+            <button id="btn-export-template" type="button" class="btn btn-ghost">
+              <span>🧾 匯出為靜態 items.json 範本</span>
+            </button>
+          </div>
+          <input id="input-import-file" type="file" accept=".json,application/json" class="sr-only">
+          <p class="field-hint">匯入新版 <code>items.json</code> 時將依 <code>id</code> 無損合併，保留現場已勾選、實價與備註紀錄。</p>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title">外觀顯示</h2>
+          <div class="segmented-control" id="theme-selector" role="radiogroup" aria-label="外觀主題">
+            <button type="button" class="seg-btn" data-theme="auto">跟隨系統</button>
+            <button type="button" class="seg-btn" data-theme="light">明亮高對比</button>
+            <button type="button" class="seg-btn" data-theme="dark">深色護眼</button>
+          </div>
+        </section>
+
+        <section class="card card-danger">
+          <h2 class="card-title">重設資料</h2>
+          <p class="field-hint">清除本機 IndexedDB 的採買紀錄與自拍圖片，重新從靜態清單載入。</p>
+          <button id="btn-reset-all" type="button" class="btn btn-danger">🗑️ 重置本機所有資料</button>
+        </section>
+      </main>
+    </section>
+
+    <!-- ==================== 底部單手主導覽列 ==================== -->
+    <nav class="bottom-nav" aria-label="主導覽列">
+      <button type="button" class="nav-item active" data-tab="list">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>代購清單</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="checkout">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7h6m-6 4h6m-7 5h8M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>結帳統計</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="settings">
+        <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>備份與匯入</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ==================== 編輯／新增商品 Bottom Sheet ==================== -->
+  <div id="sheet-backdrop" class="sheet-backdrop hidden" aria-hidden="true">
+    <div id="sheet-item" class="bottom-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <div class="sheet-handle-bar"><span class="sheet-handle"></span></div>
+      <div class="sheet-header">
+        <h2 id="sheet-title" class="sheet-title">編輯商品紀錄</h2>
+        <button id="btn-sheet-close" type="button" class="icon-btn" aria-label="關閉">&times;</button>
+      </div>
+
+      <form id="item-form" class="sheet-body" novalidate>
+        <div class="photo-editor">
+          <div id="form-photo-preview" class="photo-preview">
+            <span class="photo-placeholder">尚無商品圖片</span>
+          </div>
+          <div class="photo-controls">
+            <div class="photo-btn-row">
+              <button id="btn-camera-capture" type="button" class="btn btn-secondary btn-sm">📷 現場拍照</button>
+              <button id="btn-gallery-pick" type="button" class="btn btn-secondary btn-sm">🖼️ 相簿選圖</button>
+            </div>
+            <div class="photo-meta-row">
+              <span id="photo-size-info" class="field-hint">自動壓縮 ≤800px WebP</span>
+              <button id="btn-remove-photo" type="button" class="btn-link hidden">移除自拍圖</button>
+            </div>
+            <input id="input-camera" type="file" accept="image/*" capture="environment" class="sr-only">
+            <input id="input-gallery" type="file" accept="image/*" class="sr-only">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="field-name" class="field-label">商品名稱 <span class="required">*</span></label>
+          <input id="field-name" type="text" required placeholder="例如：EVE A 止痛藥 60錠">
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="field-actual-price" class="field-label">實買單價（JPY）</label>
+            <input id="field-actual-price" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" placeholder="實付日圓">
+          </div>
+          <div class="form-group">
+            <label for="field-target-price" class="field-label">參考單價（JPY）</label>
+            <input id="field-target-price" type="number" inputmode="numeric" pattern="[0-9]*" min="0" step="1" placeholder="預算參考">
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="field-label">實買數量</label>
+            <div class="stepper">
+              <button id="btn-actual-minus" type="button" class="stepper-btn" aria-label="減少實買數量">−</button>
+              <input id="field-actual-qty" type="number" inputmode="numeric" min="0" step="1" class="stepper-input">
+              <button id="btn-actual-plus" type="button" class="stepper-btn" aria-label="增加實買數量">+</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="field-label">目標數量</label>
+            <div class="stepper">
+              <button id="btn-target-minus" type="button" class="stepper-btn" aria-label="減少目標數量">−</button>
+              <input id="field-target-qty" type="number" inputmode="numeric" min="1" step="1" class="stepper-input">
+              <button id="btn-target-plus" type="button" class="stepper-btn" aria-label="增加目標數量">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="live-calc-bar">
+          <div>
+            <span class="calc-label">實買小計試算</span>
+            <strong id="sheet-live-total" class="calc-value">¥0 → NT$0</strong>
+          </div>
+          <label class="toggle-switch">
+            <input id="field-is-purchased" type="checkbox">
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">已完成</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="field-requester" class="field-label">委託人</label>
+          <input id="field-requester" type="text" placeholder="例如：哥哥、媽媽、自己">
+          <div id="requester-quick-chips" class="quick-chips"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="field-purchased-store" class="field-label">實際購買店家</label>
+          <input id="field-purchased-store" type="text" placeholder="選填，記錄實際在哪家買到">
+          <div id="purchased-store-chips" class="quick-chips"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="field-stores" class="field-label">可購買候選店家（逗號分隔）</label>
+          <input id="field-stores" type="text" placeholder="例如：松本清, 大國藥妝, 唐吉訶德">
+        </div>
+
+        <div class="form-group">
+          <label for="field-note" class="field-label">備註說明</label>
+          <textarea id="field-note" rows="2" placeholder="款式、顏色、幫誰多帶等注意事項"></textarea>
+        </div>
+
+        <div class="sheet-footer">
+          <button id="btn-delete-item" type="button" class="btn btn-danger hidden">刪除</button>
+          <button id="btn-save-item" type="submit" class="btn btn-primary btn-flex">儲存紀錄</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== 全螢幕圖片比對 Lightbox ==================== -->
+  <div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="商品圖片大圖比對">
+    <div class="lightbox-top">
+      <button id="btn-lightbox-reset" type="button" class="lightbox-pill-btn">重設縮放</button>
+      <button id="btn-lightbox-close" type="button" class="lightbox-close-btn" aria-label="關閉大圖">&times;</button>
+    </div>
+    <div id="lightbox-stage" class="lightbox-stage">
+      <img id="lightbox-img" class="lightbox-img" alt="商品比對圖片" draggable="false">
+    </div>
+    <div class="lightbox-card" aria-label="日文尋貨字卡">
+      <div id="lightbox-item-name" class="lightbox-item-name"></div>
+      <div class="lightbox-jp" lang="ja">すみません、この商品はありますか？</div>
+      <div class="lightbox-zh">請問有這個商品嗎？（可雙指放大圖片）</div>
+    </div>
+  </div>
+
+  <!-- ==================== 確認對話框 Modal ==================== -->
+  <div id="modal-confirm" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-box">
+      <h3 id="confirm-title" class="modal-title">請確認</h3>
+      <p id="confirm-message" class="modal-message"></p>
+      <div id="confirm-actions" class="modal-actions"></div>
+    </div>
+  </div>
+
+  <!-- ==================== LINE 明細預覽 Modal ==================== -->
+  <div id="modal-line-preview" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="line-preview-title">
+    <div class="modal-box modal-box-lg">
+      <div class="modal-header-row">
+        <h3 id="line-preview-title" class="modal-title">LINE 請款文字預覽</h3>
+        <button id="btn-line-preview-close" type="button" class="icon-btn" aria-label="關閉預覽">&times;</button>
+      </div>
+      <textarea id="line-preview-text" class="preview-textarea" readonly></textarea>
+      <div class="modal-actions">
+        <button id="btn-line-preview-copy" type="button" class="btn btn-primary btn-flex">複製文字</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 底部 Toast ==================== -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "version": "2026.11.20.01",
+  "defaultExchangeRate": 0.215,
+  "items": [
+    {
+      "id": "item_001",
+      "name": "EVE A 止痛藥 60錠",
+      "image": "./assets/images/eve_a.webp",
+      "targetPrice": 798,
+      "targetQty": 2,
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "哥哥",
+      "note": "要買白色包裝，不要買成藍色DX"
+    },
+    {
+      "id": "item_002",
+      "name": "合利他命 EX Plus 270錠",
+      "image": "./assets/images/alina_ex.webp",
+      "targetPrice": 5480,
+      "targetQty": 2,
+      "stores": ["大國藥妝", "OS Drug", "松本清"],
+      "requester": "媽媽",
+      "note": "每人限購數量內優先找免稅且單價低於 5600 日圓"
+    },
+    {
+      "id": "item_003",
+      "name": "樂敦 Lycee 小花眼藥水（隱形眼鏡用）",
+      "image": "./assets/images/rohto_lycee.webp",
+      "targetPrice": 550,
+      "targetQty": 3,
+      "stores": ["松本清", "札幌藥妝", "唐吉訶德"],
+      "requester": "妹妹",
+      "note": "要買粉色隱形眼鏡專用款（コンタクト），一般款先不要"
+    },
+    {
+      "id": "item_004",
+      "name": "DHC 純欖護唇膏 1.5g",
+      "image": "./assets/images/dhc_lip.webp",
+      "targetPrice": 498,
+      "targetQty": 4,
+      "stores": ["大國藥妝", "OS Drug", "唐吉訶德"],
+      "requester": "妹妹",
+      "note": "單支或 2 入特價組皆可，單支超過 600 不買"
+    },
+    {
+      "id": "item_005",
+      "name": "休足時間 清涼足貼 18枚入",
+      "image": "./assets/images/kyusoku.webp",
+      "targetPrice": 598,
+      "targetQty": 2,
+      "stores": ["唐吉訶德", "松本清", "札幌藥妝"],
+      "requester": "自己",
+      "note": "晚上回飯店貼腳用，第一天先買一盒"
+    },
+    {
+      "id": "item_006",
+      "name": "一蘭拉麵 博多細麵 5食入盒裝",
+      "image": "./assets/images/ichiran.webp",
+      "targetPrice": 2000,
+      "targetQty": 2,
+      "stores": ["唐吉訶德", "機場免稅店"],
+      "requester": "哥哥",
+      "note": "盒裝 5 食入（非捲麵版），注意保存期限"
+    },
+    {
+      "id": "item_007",
+      "name": "Panasonic 奈米水離子吹風機 EH-NA0J",
+      "image": "./assets/images/eh_na0j.webp",
+      "targetPrice": 34800,
+      "targetQty": 1,
+      "stores": ["BicCamera", "Yodobashi"],
+      "requester": "媽媽",
+      "note": "優先霧面黑或霧面藍，搭配免稅+刷卡優惠券"
+    },
+    {
+      "id": "item_008",
+      "name": "ROYCE' 生巧克力（原味 Au Lait）",
+      "image": "./assets/images/royce_choco.webp",
+      "targetPrice": 864,
+      "targetQty": 3,
+      "stores": ["機場免稅店"],
+      "requester": "自己",
+      "note": "回程進海關後再買，記得加購保冷袋"
+    }
+  ]
+}
