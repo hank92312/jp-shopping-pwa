@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.22.05",
+  "version": "2026.11.22.06",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -94,12 +94,12 @@
       "id": "jp_009",
       "name": "合利他命 Medical GOLD 金強效錠（アリナミン メディカルゴールド）",
       "image": "./assets/images/jp_009.webp",
-      "twPrice": 1400,
-      "targetPrice": 6965,
+      "twPrice": 1090,
+      "targetPrice": 5422,
       "targetQty": 1,
       "stores": ["松本清", "大國藥妝", "唐吉訶德"],
       "requester": "媽媽",
-      "note": "台灣參考售價 NT$1,400；日本第3類医薬品，請注意錠數規格"
+      "note": "台灣參考售價 NT$1,090；日本第3類医薬品，請注意錠數規格"
     },
     {
       "id": "jp_010",
