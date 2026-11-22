@@ -387,6 +387,26 @@ export async function mergeStaticData(jsonData, { isManualImport = false } = {})
       changed = true;
     }
 
+    const isUnbought = !existing.isPurchased && (existing.actualQty || 0) === 0;
+
+    const incomingRequester = typeof raw.requester === 'string' ? raw.requester.trim() : '';
+    if (!edited.has('requester') && (isUnbought || existing.requester === '') && incomingRequester !== existing.requester) {
+      next.requester = incomingRequester;
+      changed = true;
+    }
+
+    const incomingTargetPrice = toNullableNonNegNumber(raw.targetPrice);
+    if (!edited.has('targetPrice') && isUnbought && incomingTargetPrice !== existing.targetPrice) {
+      next.targetPrice = incomingTargetPrice;
+      changed = true;
+    }
+
+    const incomingNote = typeof raw.note === 'string' ? raw.note : '';
+    if (!edited.has('note') && isUnbought && incomingNote !== existing.note) {
+      next.note = incomingNote;
+      changed = true;
+    }
+
     if (changed) {
       next.updatedAt = Date.now();
       toPut.push(next);

@@ -1012,6 +1012,9 @@ async function handleSaveSheet(event) {
     if (state.draftRemoveOriginalImage) editedSet.add('image');
     if (JSON.stringify(stores) !== JSON.stringify(existing.stores || [])) editedSet.add('stores');
     if (twPrice !== existing.twPrice) editedSet.add('twPrice');
+    if (targetPrice !== existing.targetPrice) editedSet.add('targetPrice');
+    if (requester !== existing.requester) editedSet.add('requester');
+    if (note !== existing.note) editedSet.add('note');
 
     const updated = normalizeItem({
       ...existing,

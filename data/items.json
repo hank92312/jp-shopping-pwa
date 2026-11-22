@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.22.04",
+  "version": "2026.11.22.05",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -9,26 +9,20 @@
       "twPrice": 85,
       "targetPrice": 422,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清",
-        "大國藥妝"
-      ],
-      "requester": "",
+      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "requester": "旺調",
       "note": "台灣網店特價 NT$85（原價 NT$175）"
     },
     {
       "id": "jp_002",
       "name": "7-11 砂糖奶油樹 原味（シュガーバターの木）",
       "image": "./assets/images/jp_002.webp",
-      "twPrice": 130,
-      "targetPrice": 646,
+      "twPrice": null,
+      "targetPrice": 290,
       "targetQty": 1,
-      "stores": [
-        "7-11"
-      ],
-      "requester": "",
-      "note": "7-ELEVEN 限定（藍色包裝）；台灣蝦皮代購約 NT$130"
+      "stores": ["7-11"],
+      "requester": "媽媽",
+      "note": "7-ELEVEN 限定（藍色包裝）；指定日本目標價 ¥290（台灣代購參考約 NT$130）"
     },
     {
       "id": "jp_003",
@@ -37,52 +31,42 @@
       "twPrice": 155,
       "targetPrice": 771,
       "targetQty": 1,
-      "stores": [
-        "7-11"
-      ],
-      "requester": "",
+      "stores": ["7-11"],
+      "requester": "媽媽",
       "note": "7-ELEVEN 期間限定（紅色包裝）；台灣蝦皮代購約 NT$155"
     },
     {
       "id": "jp_004",
       "name": "7-11 砂糖奶油樹 洋酒葡萄夾心（シュガーバターの木 レーズンサンド）",
       "image": "./assets/images/jp_004.webp",
-      "twPrice": 155,
-      "targetPrice": 771,
+      "twPrice": null,
+      "targetPrice": 430,
       "targetQty": 1,
-      "stores": [
-        "7-11"
-      ],
-      "requester": "",
-      "note": "7-ELEVEN 販售（深藍包裝）；台灣蝦皮代購約 NT$155"
+      "stores": ["7-11"],
+      "requester": "媽媽",
+      "note": "7-ELEVEN 販售（深藍包裝）；指定日本目標價 ¥430（台灣代購參考約 NT$155）"
     },
     {
       "id": "jp_005",
       "name": "7-11 砂糖奶油樹 焦糖布蕾（シュガーバターの木 キャラメルブリュレ）",
       "image": "./assets/images/jp_005.webp",
-      "twPrice": 155,
-      "targetPrice": 771,
+      "twPrice": null,
+      "targetPrice": 290,
       "targetQty": 1,
-      "stores": [
-        "7-11"
-      ],
-      "requester": "",
-      "note": "7-ELEVEN 販售（橘色包裝）；台灣蝦皮代購約 NT$155"
+      "stores": ["7-11"],
+      "requester": "媽媽",
+      "note": "7-ELEVEN 販售（橘色包裝）；指定日本目標價 ¥290（台灣代購參考約 NT$155）"
     },
     {
       "id": "jp_006",
       "name": "堀西萬能調味粉 白瓶 100g（アウトドアスパイス ほりにし）",
       "image": "./assets/images/jp_006.webp",
-      "twPrice": 250,
-      "targetPrice": 1243,
+      "twPrice": 190,
+      "targetPrice": 945,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "超市",
-        "戶外用品店"
-      ],
-      "requester": "",
-      "note": "台灣參考售價 NT$250"
+      "stores": ["唐吉訶德", "超市", "戶外用品店"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$190"
     },
     {
       "id": "jp_007",
@@ -91,12 +75,8 @@
       "twPrice": 140,
       "targetPrice": 696,
       "targetQty": 1,
-      "stores": [
-        "超市",
-        "唐吉訶德",
-        "機場"
-      ],
-      "requester": "",
+      "stores": ["超市", "唐吉訶德", "機場"],
+      "requester": "媽媽",
       "note": "台灣參考售價 NT$140"
     },
     {
@@ -106,12 +86,8 @@
       "twPrice": 440,
       "targetPrice": 2189,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "大國藥妝",
-        "唐吉訶德"
-      ],
-      "requester": "",
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "媽媽",
       "note": "台灣網購特價 NT$440（原價 NT$879）"
     },
     {
@@ -121,12 +97,8 @@
       "twPrice": 1400,
       "targetPrice": 6965,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "大國藥妝",
-        "唐吉訶德"
-      ],
-      "requester": "",
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "媽媽",
       "note": "台灣參考售價 NT$1,400；日本第3類医薬品，請注意錠數規格"
     },
     {
@@ -136,10 +108,8 @@
       "twPrice": 990,
       "targetPrice": 4925,
       "targetQty": 1,
-      "stores": [
-        "UNIQLO"
-      ],
-      "requester": "",
+      "stores": ["UNIQLO"],
+      "requester": "媽媽",
       "note": "台灣 UNIQLO 官網售價 NT$990；JP 吊牌 ¥3,990；尺寸 S（腰圍 61-67cm）、色號 69 Navy"
     },
     {
@@ -149,11 +119,8 @@
       "twPrice": 125,
       "targetPrice": 621,
       "targetQty": 1,
-      "stores": [
-        "便利商店",
-        "機場免稅店"
-      ],
-      "requester": "",
+      "stores": ["便利商店", "機場免稅店"],
+      "requester": "媽媽",
       "note": "台灣超商單包約 NT$125（一條10包約 NT$1,250；日本免稅一條約 ¥3,700~4,400）；入境免稅限 1 條（200 支）"
     },
     {
@@ -163,41 +130,31 @@
       "twPrice": 350,
       "targetPrice": 1741,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "ココカラファイン"
-      ],
-      "requester": "",
+      "stores": ["松本清", "ココカラファイン"],
+      "requester": "媽媽",
       "note": "台灣松本清/代購約 NT$350（區間 NT$279~599）；JP 含稅參考價 ¥1,320；マツキヨココカラ限定"
     },
     {
       "id": "jp_013",
       "name": "Kurakon 鹽昆布 47g（くらこん 塩こんぶ）",
       "image": "./assets/images/jp_013.webp",
-      "twPrice": 80,
-      "targetPrice": 398,
+      "twPrice": null,
+      "targetPrice": 259,
       "targetQty": 1,
-      "stores": [
-        "超市",
-        "唐吉訶德"
-      ],
-      "requester": "",
-      "note": "台灣蝦皮 47g 單包約 NT$80（一般包區間 NT$50~100）"
+      "stores": ["超市", "唐吉訶德"],
+      "requester": "媽媽",
+      "note": "指定日本目標價 ¥259（47g 裝；台灣蝦皮參考約 NT$80）"
     },
     {
       "id": "jp_014",
       "name": "DARIYA Salon de PRO 無味白髮染 5K（サロンドプロ 早染めクリーム 5K）",
       "image": "./assets/images/jp_014.webp",
-      "twPrice": 299,
-      "targetPrice": 1487,
+      "twPrice": 130,
+      "targetPrice": 646,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "大國藥妝",
-        "唐吉訶德"
-      ],
-      "requester": "",
-      "note": "台灣網購約 NT$299（屈臣氏/康是美約 NT$329~450）；色號 5K（栗色がかったナチュラルブラウン）"
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$130；色號 5K（栗色がかったナチュラルブラウン）"
     },
     {
       "id": "jp_015",
@@ -206,70 +163,53 @@
       "twPrice": 360,
       "targetPrice": 1791,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清",
-        "大國藥妝"
-      ],
-      "requester": "",
+      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "requester": "媽媽",
       "note": "台灣蝦皮代購單包約 NT$360（區間 NT$280~420）；唐吉訶德 3袋組稅込 ¥4,407（約 ¥1,469/袋）"
     },
     {
       "id": "jp_016",
       "name": "伊藤園 濃茶 抹茶入綠茶粉 80g（お～いお茶 濃い茶 さらさら抹茶入り緑茶）",
       "image": "./assets/images/jp_016.webp",
-      "twPrice": 290,
-      "targetPrice": 1442,
+      "twPrice": 250,
+      "targetPrice": 1243,
       "targetQty": 1,
-      "stores": [
-        "超市",
-        "唐吉訶德"
-      ],
-      "requester": "",
-      "note": "台灣網購/唐吉訶德約 NT$290（區間 NT$240~330）"
+      "stores": ["超市", "唐吉訶德"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$250"
     },
     {
       "id": "jp_017",
       "name": "Higashimaru 牡蠣高湯醬油 400ml（ヒガシマル 牡蠣だし醤油）",
       "image": "./assets/images/jp_017.webp",
-      "twPrice": 259,
-      "targetPrice": 1288,
+      "twPrice": 160,
+      "targetPrice": 796,
       "targetQty": 1,
-      "stores": [
-        "超市",
-        "唐吉訶德"
-      ],
-      "requester": "",
-      "note": "台灣蝦皮約 NT$259；JP 超市稅込 ¥328"
+      "stores": ["超市", "唐吉訶德"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$160；JP 超市稅込 ¥328"
     },
     {
       "id": "jp_018",
       "name": "PriO 無線熱敷蒸氣眼罩 真絲款（PriO コードレスホットアイマスク）",
       "image": "./assets/images/jp_018.webp",
-      "twPrice": 1350,
-      "targetPrice": 6716,
+      "twPrice": 900,
+      "targetPrice": 4477,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "BicCamera",
-        "藥妝店"
-      ],
-      "requester": "",
-      "note": "台灣無正式代理，代購約 NT$1,350（區間 NT$1,200~1,600）；JP 市價稅込約 ¥4,380"
+      "stores": ["唐吉訶德", "BicCamera", "藥妝店"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$900；JP 市價稅込約 ¥4,380"
     },
     {
       "id": "jp_019",
       "name": "悠斯晶 Yuskin 米飛兔限定版 40g（ユースキン ミッフィーチューブ）",
       "image": "./assets/images/jp_019.webp",
-      "twPrice": 169,
-      "targetPrice": 840,
+      "twPrice": 240,
+      "targetPrice": 1194,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清"
-      ],
-      "requester": "",
-      "note": "台灣 momo/藥妝約 NT$169（區間 NT$149~189）；唐吉訶德稅込 ¥658（未稅 ¥598）"
+      "stores": ["唐吉訶德", "松本清"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$240；唐吉訶德稅込 ¥658（未稅 ¥598）"
     },
     {
       "id": "jp_020",
@@ -278,11 +218,8 @@
       "twPrice": 299,
       "targetPrice": 1487,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清"
-      ],
-      "requester": "",
+      "stores": ["唐吉訶德", "松本清"],
+      "requester": "媽媽",
       "note": "台灣屈臣氏/momo 約 NT$299（區間 NT$265~320）；唐吉訶德稅込 ¥1,078（未稅 ¥980）"
     },
     {
@@ -292,12 +229,8 @@
       "twPrice": 320,
       "targetPrice": 1592,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清",
-        "大國藥妝"
-      ],
-      "requester": "",
+      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "requester": "媽媽",
       "note": "台灣蝦皮代購約 NT$320（區間 NT$280~380）；店頭稅込 ¥1,408"
     },
     {
@@ -307,28 +240,20 @@
       "twPrice": 300,
       "targetPrice": 1492,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清",
-        "大國藥妝"
-      ],
-      "requester": "",
+      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "requester": "媽媽",
       "note": "台灣蝦皮代購約 NT$300（區間 NT$250~350）；店頭稅込約 ¥1,580"
     },
     {
       "id": "jp_023",
       "name": "DHC 藍莓精華 60日分 120粒（DHC ブルーベリーエキス）",
       "image": "./assets/images/jp_023.webp",
-      "twPrice": 540,
-      "targetPrice": 2686,
+      "twPrice": 430,
+      "targetPrice": 2139,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清",
-        "大國藥妝"
-      ],
-      "requester": "",
-      "note": "台灣蝦皮/momo 一般版約 NT$540（區間 NT$500~580）；店頭稅込 ¥1,815"
+      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$430；店頭稅込 ¥1,815"
     },
     {
       "id": "jp_024",
@@ -337,11 +262,8 @@
       "twPrice": 750,
       "targetPrice": 3731,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "大國藥妝"
-      ],
-      "requester": "",
+      "stores": ["松本清", "大國藥妝"],
+      "requester": "媽媽",
       "note": "照片中手持商品，請確認是否需要；台灣代購 60粒約 NT$750（JP 含稅定價約 ¥3,240~3,564）"
     },
     {
@@ -351,11 +273,8 @@
       "twPrice": 145,
       "targetPrice": 721,
       "targetQty": 1,
-      "stores": [
-        "唐吉訶德",
-        "松本清"
-      ],
-      "requester": "",
+      "stores": ["唐吉訶德", "松本清"],
+      "requester": "媽媽",
       "note": "台灣蝦皮約 NT$145（區間 NT$110~180）；3袋組稅込 ¥1,275"
     },
     {
@@ -365,12 +284,8 @@
       "twPrice": 1450,
       "targetPrice": 7213,
       "targetQty": 1,
-      "stores": [
-        "BicCamera",
-        "Yodobashi",
-        "玩具店"
-      ],
-      "requester": "",
+      "stores": ["BicCamera", "Yodobashi", "玩具店"],
+      "requester": "旺調",
       "note": "台灣代理版約 NT$1,450（區間 NT$1,300~1,600，水貨曾達 NT$3,890+）；JP 官方含稅定價 ¥6,600"
     },
     {
@@ -380,12 +295,8 @@
       "twPrice": 149,
       "targetPrice": 741,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "大國藥妝",
-        "唐吉訶德"
-      ],
-      "requester": "",
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "自己",
       "note": "台灣參考售價 NT$149（10日分/20粒裝）；日本另有 20日分/40粒裝，買到更划算"
     },
     {
@@ -395,12 +306,8 @@
       "twPrice": 149,
       "targetPrice": 741,
       "targetQty": 1,
-      "stores": [
-        "松本清",
-        "大國藥妝",
-        "唐吉訶德"
-      ],
-      "requester": "",
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "自己",
       "note": "台灣參考售價 NT$149（10日分/20粒裝）；日本另有 20日分/40粒裝，買到更划算"
     },
     {
@@ -410,13 +317,31 @@
       "twPrice": 185,
       "targetPrice": 920,
       "targetQty": 1,
-      "stores": [
-        "大國藥妝",
-        "松本清",
-        "唐吉訶德"
-      ],
-      "requester": "",
+      "stores": ["大國藥妝", "松本清", "唐吉訶德"],
+      "requester": "冠州",
       "note": "台灣網購 30日分罐裝(60粒) 約 NT$150~250（momo跨境約 NT$130~200）；截圖顯示大國藥妝亦有袋裝 20日分"
+    },
+    {
+      "id": "jp_030",
+      "name": "Kurakon 鹽昆布 130g 大容量（くらこん 塩こんぶ 130g）",
+      "image": "./assets/images/jp_030.webp",
+      "twPrice": 160,
+      "targetPrice": 796,
+      "targetQty": 1,
+      "stores": ["超市", "唐吉訶德"],
+      "requester": "媽媽",
+      "note": "台灣參考售價 NT$160（130g 大容量裝）"
+    },
+    {
+      "id": "jp_031",
+      "name": "合利他命 EX Plus（アリナミンEXプラス）",
+      "image": "./assets/images/jp_031.webp",
+      "twPrice": 1900,
+      "targetPrice": 9452,
+      "targetQty": 1,
+      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "requester": "旺調",
+      "note": "台灣參考售價 NT$1,900（270錠常見代購/藥局價）；日本第3類医薬品"
     }
   ]
 }
