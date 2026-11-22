@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.22.02",
+  "version": "2026.11.22.03",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -372,6 +372,36 @@
       ],
       "requester": "",
       "note": "台灣代理版約 NT$1,450（區間 NT$1,300~1,600，水貨曾達 NT$3,890+）；JP 官方含稅定價 ¥6,600"
+    },
+    {
+      "id": "jp_027",
+      "name": "UHA 味覺糖 鐵軟糖 葡萄風味（グミサプリ 鉄 グレープ味）",
+      "image": "./assets/images/jp_027.webp",
+      "twPrice": 149,
+      "targetPrice": 741,
+      "targetQty": 1,
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
+      "requester": "",
+      "note": "台灣參考售價 NT$149（10日分/20粒裝）；日本另有 20日分/40粒裝，買到更划算"
+    },
+    {
+      "id": "jp_028",
+      "name": "UHA 味覺糖 鋅與馬卡軟糖 可樂風味（グミサプリ 亜鉛&マカ コーラ味）",
+      "image": "./assets/images/jp_028.webp",
+      "twPrice": 149,
+      "targetPrice": 741,
+      "targetQty": 1,
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
+      "requester": "",
+      "note": "台灣參考售價 NT$149（10日分/20粒裝）；日本另有 20日分/40粒裝，買到更划算"
     }
   ]
 }
