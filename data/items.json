@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.22.06",
+  "version": "2026.11.22.07",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -122,17 +122,6 @@
       "stores": ["便利商店", "機場免稅店"],
       "requester": "媽媽",
       "note": "台灣超商單包約 NT$125（一條10包約 NT$1,250；日本免稅一條約 ¥3,700~4,400）；入境免稅限 1 條（200 支）"
-    },
-    {
-      "id": "jp_012",
-      "name": "for the F 藥用美白抗皺 UV 護手霜 潤色款（薬用リンクルクリア ハンド UV トーンアップ）",
-      "image": "./assets/images/jp_012.webp",
-      "twPrice": 350,
-      "targetPrice": 1741,
-      "targetQty": 1,
-      "stores": ["松本清", "ココカラファイン"],
-      "requester": "媽媽",
-      "note": "台灣松本清/代購約 NT$350（區間 NT$279~599）；JP 含稅參考價 ¥1,320；マツキヨココカラ限定"
     },
     {
       "id": "jp_013",
