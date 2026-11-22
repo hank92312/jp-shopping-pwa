@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.22.07",
+  "version": "2026.11.22.08",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -188,17 +188,6 @@
       "stores": ["唐吉訶德", "BicCamera", "藥妝店"],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$900；JP 市價稅込約 ¥4,380"
-    },
-    {
-      "id": "jp_019",
-      "name": "悠斯晶 Yuskin 米飛兔限定版 40g（ユースキン ミッフィーチューブ）",
-      "image": "./assets/images/jp_019.webp",
-      "twPrice": 240,
-      "targetPrice": 1194,
-      "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清"],
-      "requester": "媽媽",
-      "note": "台灣參考售價 NT$240；唐吉訶德稅込 ¥658（未稅 ¥598）"
     },
     {
       "id": "jp_020",
