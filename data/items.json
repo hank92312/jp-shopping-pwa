@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.22.08",
+  "version": "2026.11.22.09",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -9,7 +9,11 @@
       "twPrice": 85,
       "targetPrice": 422,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "stores": [
+        "唐吉訶德",
+        "松本清",
+        "大國藥妝"
+      ],
       "requester": "旺調",
       "note": "台灣網店特價 NT$85（原價 NT$175）"
     },
@@ -20,20 +24,11 @@
       "twPrice": null,
       "targetPrice": 290,
       "targetQty": 1,
-      "stores": ["7-11"],
+      "stores": [
+        "7-11"
+      ],
       "requester": "媽媽",
       "note": "7-ELEVEN 限定（藍色包裝）；指定日本目標價 ¥290（台灣代購參考約 NT$130）"
-    },
-    {
-      "id": "jp_003",
-      "name": "7-11 砂糖奶油樹 草莓巧克力（シュガーバターの木 濃苺ショコラ）",
-      "image": "./assets/images/jp_003.webp",
-      "twPrice": 155,
-      "targetPrice": 771,
-      "targetQty": 1,
-      "stores": ["7-11"],
-      "requester": "媽媽",
-      "note": "7-ELEVEN 期間限定（紅色包裝）；台灣蝦皮代購約 NT$155"
     },
     {
       "id": "jp_004",
@@ -42,20 +37,11 @@
       "twPrice": null,
       "targetPrice": 430,
       "targetQty": 1,
-      "stores": ["7-11"],
+      "stores": [
+        "7-11"
+      ],
       "requester": "媽媽",
       "note": "7-ELEVEN 販售（深藍包裝）；指定日本目標價 ¥430（台灣代購參考約 NT$155）"
-    },
-    {
-      "id": "jp_005",
-      "name": "7-11 砂糖奶油樹 焦糖布蕾（シュガーバターの木 キャラメルブリュレ）",
-      "image": "./assets/images/jp_005.webp",
-      "twPrice": null,
-      "targetPrice": 290,
-      "targetQty": 1,
-      "stores": ["7-11"],
-      "requester": "媽媽",
-      "note": "7-ELEVEN 販售（橘色包裝）；指定日本目標價 ¥290（台灣代購參考約 NT$155）"
     },
     {
       "id": "jp_006",
@@ -64,7 +50,11 @@
       "twPrice": 190,
       "targetPrice": 945,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "超市", "戶外用品店"],
+      "stores": [
+        "唐吉訶德",
+        "超市",
+        "戶外用品店"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$190"
     },
@@ -75,7 +65,11 @@
       "twPrice": 140,
       "targetPrice": 696,
       "targetQty": 1,
-      "stores": ["超市", "唐吉訶德", "機場"],
+      "stores": [
+        "超市",
+        "唐吉訶德",
+        "機場"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$140"
     },
@@ -86,7 +80,11 @@
       "twPrice": 440,
       "targetPrice": 2189,
       "targetQty": 1,
-      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "台灣網購特價 NT$440（原價 NT$879）"
     },
@@ -97,7 +95,11 @@
       "twPrice": 1090,
       "targetPrice": 5422,
       "targetQty": 1,
-      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$1,090；日本第3類医薬品，請注意錠數規格"
     },
@@ -108,7 +110,9 @@
       "twPrice": 990,
       "targetPrice": 4925,
       "targetQty": 1,
-      "stores": ["UNIQLO"],
+      "stores": [
+        "UNIQLO"
+      ],
       "requester": "媽媽",
       "note": "台灣 UNIQLO 官網售價 NT$990；JP 吊牌 ¥3,990；尺寸 S（腰圍 61-67cm）、色號 69 Navy"
     },
@@ -119,7 +123,10 @@
       "twPrice": 125,
       "targetPrice": 621,
       "targetQty": 1,
-      "stores": ["便利商店", "機場免稅店"],
+      "stores": [
+        "便利商店",
+        "機場免稅店"
+      ],
       "requester": "媽媽",
       "note": "台灣超商單包約 NT$125（一條10包約 NT$1,250；日本免稅一條約 ¥3,700~4,400）；入境免稅限 1 條（200 支）"
     },
@@ -130,7 +137,10 @@
       "twPrice": null,
       "targetPrice": 259,
       "targetQty": 1,
-      "stores": ["超市", "唐吉訶德"],
+      "stores": [
+        "超市",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "指定日本目標價 ¥259（47g 裝；台灣蝦皮參考約 NT$80）"
     },
@@ -141,7 +151,11 @@
       "twPrice": 130,
       "targetPrice": 646,
       "targetQty": 1,
-      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$130；色號 5K（栗色がかったナチュラルブラウン）"
     },
@@ -152,7 +166,11 @@
       "twPrice": 360,
       "targetPrice": 1791,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "stores": [
+        "唐吉訶德",
+        "松本清",
+        "大國藥妝"
+      ],
       "requester": "媽媽",
       "note": "台灣蝦皮代購單包約 NT$360（區間 NT$280~420）；唐吉訶德 3袋組稅込 ¥4,407（約 ¥1,469/袋）"
     },
@@ -163,7 +181,10 @@
       "twPrice": 250,
       "targetPrice": 1243,
       "targetQty": 1,
-      "stores": ["超市", "唐吉訶德"],
+      "stores": [
+        "超市",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$250"
     },
@@ -174,7 +195,10 @@
       "twPrice": 160,
       "targetPrice": 796,
       "targetQty": 1,
-      "stores": ["超市", "唐吉訶德"],
+      "stores": [
+        "超市",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$160；JP 超市稅込 ¥328"
     },
@@ -185,7 +209,11 @@
       "twPrice": 900,
       "targetPrice": 4477,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "BicCamera", "藥妝店"],
+      "stores": [
+        "唐吉訶德",
+        "BicCamera",
+        "藥妝店"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$900；JP 市價稅込約 ¥4,380"
     },
@@ -196,20 +224,12 @@
       "twPrice": 299,
       "targetPrice": 1487,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清"],
+      "stores": [
+        "唐吉訶德",
+        "松本清"
+      ],
       "requester": "媽媽",
       "note": "台灣屈臣氏/momo 約 NT$299（區間 NT$265~320）；唐吉訶德稅込 ¥1,078（未稅 ¥980）"
-    },
-    {
-      "id": "jp_021",
-      "name": "撒隆巴斯 120枚（サロンパス 120枚）",
-      "image": "./assets/images/jp_021.webp",
-      "twPrice": 320,
-      "targetPrice": 1592,
-      "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
-      "requester": "媽媽",
-      "note": "台灣蝦皮代購約 NT$320（區間 NT$280~380）；店頭稅込 ¥1,408"
     },
     {
       "id": "jp_022",
@@ -218,7 +238,11 @@
       "twPrice": 300,
       "targetPrice": 1492,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "stores": [
+        "唐吉訶德",
+        "松本清",
+        "大國藥妝"
+      ],
       "requester": "媽媽",
       "note": "台灣蝦皮代購約 NT$300（區間 NT$250~350）；店頭稅込約 ¥1,580"
     },
@@ -229,31 +253,13 @@
       "twPrice": 430,
       "targetPrice": 2139,
       "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清", "大國藥妝"],
+      "stores": [
+        "唐吉訶德",
+        "松本清",
+        "大國藥妝"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$430；店頭稅込 ¥1,815"
-    },
-    {
-      "id": "jp_024",
-      "name": "ROHTO THE LYPO 維他命C 60粒（ロート ザ・リポ ビタミンC）",
-      "image": "./assets/images/jp_024.webp",
-      "twPrice": 750,
-      "targetPrice": 3731,
-      "targetQty": 1,
-      "stores": ["松本清", "大國藥妝"],
-      "requester": "媽媽",
-      "note": "照片中手持商品，請確認是否需要；台灣代購 60粒約 NT$750（JP 含稅定價約 ¥3,240~3,564）"
-    },
-    {
-      "id": "jp_025",
-      "name": "DHC 維他命B群 60日分（DHC ビタミンBミックス）",
-      "image": "./assets/images/jp_025.webp",
-      "twPrice": 145,
-      "targetPrice": 721,
-      "targetQty": 1,
-      "stores": ["唐吉訶德", "松本清"],
-      "requester": "媽媽",
-      "note": "台灣蝦皮約 NT$145（區間 NT$110~180）；3袋組稅込 ¥1,275"
     },
     {
       "id": "jp_026",
@@ -262,7 +268,11 @@
       "twPrice": 1450,
       "targetPrice": 7213,
       "targetQty": 1,
-      "stores": ["BicCamera", "Yodobashi", "玩具店"],
+      "stores": [
+        "BicCamera",
+        "Yodobashi",
+        "玩具店"
+      ],
       "requester": "旺調",
       "note": "台灣代理版約 NT$1,450（區間 NT$1,300~1,600，水貨曾達 NT$3,890+）；JP 官方含稅定價 ¥6,600"
     },
@@ -273,7 +283,11 @@
       "twPrice": 149,
       "targetPrice": 741,
       "targetQty": 1,
-      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
       "requester": "自己",
       "note": "台灣參考售價 NT$149（10日分/20粒裝）；日本另有 20日分/40粒裝，買到更划算"
     },
@@ -284,7 +298,11 @@
       "twPrice": 149,
       "targetPrice": 741,
       "targetQty": 1,
-      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
       "requester": "自己",
       "note": "台灣參考售價 NT$149（10日分/20粒裝）；日本另有 20日分/40粒裝，買到更划算"
     },
@@ -295,7 +313,11 @@
       "twPrice": 185,
       "targetPrice": 920,
       "targetQty": 1,
-      "stores": ["大國藥妝", "松本清", "唐吉訶德"],
+      "stores": [
+        "大國藥妝",
+        "松本清",
+        "唐吉訶德"
+      ],
       "requester": "冠州",
       "note": "台灣網購 30日分罐裝(60粒) 約 NT$150~250（momo跨境約 NT$130~200）；截圖顯示大國藥妝亦有袋裝 20日分"
     },
@@ -306,7 +328,10 @@
       "twPrice": 160,
       "targetPrice": 796,
       "targetQty": 1,
-      "stores": ["超市", "唐吉訶德"],
+      "stores": [
+        "超市",
+        "唐吉訶德"
+      ],
       "requester": "媽媽",
       "note": "台灣參考售價 NT$160（130g 大容量裝）"
     },
@@ -317,7 +342,11 @@
       "twPrice": 1900,
       "targetPrice": 9452,
       "targetQty": 1,
-      "stores": ["松本清", "大國藥妝", "唐吉訶德"],
+      "stores": [
+        "松本清",
+        "大國藥妝",
+        "唐吉訶德"
+      ],
       "requester": "旺調",
       "note": "台灣參考售價 NT$1,900（270錠常見代購/藥局價）；日本第3類医薬品"
     }
