@@ -14,6 +14,9 @@ import {
   setTheme,
   addDeletedStaticId,
   clearDeletedStaticIds,
+  getRequesterList,
+  setRequesterList,
+  resetRequesterList,
   normalizeItem,
   normalizeStores,
   mergeStaticData,
@@ -30,6 +33,8 @@ import {
   calcItemTwd,
   formatJpy,
   formatTwd,
+  getJpyLimit,
+  compareWithTaiwan,
   computeCheckoutStats,
   formatLineSummary,
   generateCsvContent,
@@ -37,7 +42,7 @@ import {
   copyTextToClipboard
 } from './export.js';
 
-const IMG_CACHE_NAME = 'jp-shop-img-v1';
+const IMG_CACHE_NAME = 'jp-shop-img-v2';
 
 const state = {
   items: [],
@@ -105,6 +110,10 @@ const els = {
   btnImportJson: document.getElementById('btn-import-json'),
   btnExportTemplate: document.getElementById('btn-export-template'),
   inputImportFile: document.getElementById('input-import-file'),
+  settingsRequesterList: document.getElementById('settings-requester-list'),
+  inputNewRequester: document.getElementById('input-new-requester'),
+  btnAddRequester: document.getElementById('btn-add-requester'),
+  btnResetRequesters: document.getElementById('btn-reset-requesters'),
   themeSelectorBtns: [...document.querySelectorAll('#theme-selector .seg-btn')],
   btnResetAll: document.getElementById('btn-reset-all'),
 
@@ -121,6 +130,8 @@ const els = {
   inputCamera: document.getElementById('input-camera'),
   inputGallery: document.getElementById('input-gallery'),
   fieldName: document.getElementById('field-name'),
+  fieldTwPrice: document.getElementById('field-tw-price'),
+  twLimitHint: document.getElementById('tw-limit-hint'),
   fieldActualPrice: document.getElementById('field-actual-price'),
   fieldTargetPrice: document.getElementById('field-target-price'),
   fieldActualQty: document.getElementById('field-actual-qty'),
@@ -130,6 +141,7 @@ const els = {
   btnTargetMinus: document.getElementById('btn-target-minus'),
   btnTargetPlus: document.getElementById('btn-target-plus'),
   sheetLiveTotal: document.getElementById('sheet-live-total'),
+  sheetCompareResult: document.getElementById('sheet-compare-result'),
   fieldIsPurchased: document.getElementById('field-is-purchased'),
   fieldRequester: document.getElementById('field-requester'),
   requesterQuickChips: document.getElementById('requester-quick-chips'),
@@ -530,12 +542,13 @@ function renderItemCardHtml(item) {
     ? `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(item.name)}" loading="lazy"><span class="thumb-zoom-hint">放大</span>`
     : `<div class="thumb-empty"><span>無圖片</span></div>`;
 
-  // Tags
-  const tags = [
-    `<span class="tag tag-requester">${escapeHtml(item.requester || '自己')}</span>`
-  ];
+  // Tags（委託人未指派時不顯示標籤）
+  const tags = [];
+  if (item.requester && item.requester.trim()) {
+    tags.push(`<span class="tag tag-requester">${escapeHtml(item.requester.trim())}</span>`);
+  }
   if (item.isExtra) {
-    tags.push('<span class="tag tag-extra">額外</span>');
+    tags.push('<span class="tag tag-extra">自行新增</span>');
   }
   if (purchaseState === 'partial') {
     tags.push(`<span class="tag tag-partial">部分 ${item.actualQty}/${item.targetQty}</span>`);
@@ -558,9 +571,25 @@ function renderItemCardHtml(item) {
     const qty = item.actualQty || item.targetQty || 1;
     const subtotalJpy = item.actualPrice * qty;
     const subtotalTwd = calcItemTwd(subtotalJpy, state.exchangeRate);
+    const cmp = compareWithTaiwan(item, item.actualPrice, state.exchangeRate);
+    let cmpBadge = '';
+    if (cmp) {
+      if (cmp.diff >= 0) {
+        cmpBadge = `<span class="price-save">✅ 比台灣省 ${formatTwd(cmp.diff)}/個</span>`;
+      } else {
+        cmpBadge = `<span class="price-over">⚠️ 比台灣貴 ${formatTwd(Math.abs(cmp.diff))}/個</span>`;
+      }
+    }
     priceHtml = `
       <span class="price-actual">實買 ${formatJpy(item.actualPrice)} × ${qty} = ${formatJpy(subtotalJpy)}</span>
       <span class="price-twd">(${formatTwd(subtotalTwd)})</span>
+      ${cmpBadge}
+    `;
+  } else if (item.twPrice !== null && item.twPrice !== undefined) {
+    const limitJpy = getJpyLimit(item, state.exchangeRate);
+    priceHtml = `
+      <span class="price-main">台灣 ${formatTwd(item.twPrice)}｜日本 ≤ ${formatJpy(limitJpy)} 就划算</span>
+      <span class="qty-text">· 目標 ${item.targetQty} 個</span>
     `;
   } else if (item.targetPrice !== null) {
     const refTwd = calcItemTwd(item.targetPrice, state.exchangeRate);
@@ -640,7 +669,7 @@ function renderCheckoutView() {
         <button type="button" class="group-item-row" data-edit-id="${escapeHtml(entry.item.id)}">
           <div class="group-item-left">
             <div class="group-item-title">${escapeHtml(entry.item.name)}</div>
-            <div class="group-item-meta">${escapeHtml(storeMeta)}實買 ${entry.qty} 件${entry.item.isExtra ? ' · 額外' : ''}</div>
+            <div class="group-item-meta">${escapeHtml(storeMeta)}實買 ${entry.qty} 件${entry.item.isExtra ? ' · 自行新增' : ''}</div>
           </div>
           <div class="group-item-right">${priceRight}</div>
         </button>
@@ -666,8 +695,25 @@ function renderCheckoutView() {
 }
 
 // ==================== 渲染：分頁 3 設定與備份 ====================
+function renderRequesterSettings() {
+  const list = getRequesterList();
+  if (list.length === 0) {
+    els.settingsRequesterList.innerHTML = '<span class="field-hint">目前尚無預設委託人，請於下方新增。</span>';
+    return;
+  }
+  els.settingsRequesterList.innerHTML = list
+    .map((name) => `
+      <span class="requester-chip">
+        <span>${escapeHtml(name)}</span>
+        <button type="button" class="requester-chip-del" data-remove-requester="${escapeHtml(name)}" aria-label="刪除 ${escapeHtml(name)}">&times;</button>
+      </span>
+    `)
+    .join('');
+}
+
 function renderSettingsView() {
   els.settingsVersion.textContent = getItemsVersion() || '未記錄';
+  renderRequesterSettings();
   applyTheme(state.theme);
 }
 
@@ -755,12 +801,48 @@ function renderSheetPhotoPreview(editingItem) {
   els.btnRemovePhoto.classList.add('hidden');
 }
 
+function updateSheetTwLimitHint() {
+  const raw = els.fieldTwPrice.value.trim();
+  if (raw === '') {
+    els.twLimitHint.textContent = '填寫台灣售價可自動計算日本划算上限價';
+    return;
+  }
+  const tw = Number(raw);
+  if (Number.isFinite(tw) && tw >= 0 && state.exchangeRate > 0) {
+    const limit = Math.floor(tw / state.exchangeRate);
+    els.twLimitHint.textContent = `日本單價 ≤ ${formatJpy(limit)} 就比台灣便宜（匯率 ${state.exchangeRate}）`;
+  } else {
+    els.twLimitHint.textContent = '';
+  }
+}
+
 function updateSheetLiveTotal() {
-  const unit = Number(els.fieldActualPrice.value);
+  const unitRaw = els.fieldActualPrice.value.trim();
+  const unit = Number(unitRaw);
   const qty = Math.max(0, Math.floor(Number(els.fieldActualQty.value) || 0));
-  const jpy = Number.isFinite(unit) && unit >= 0 ? unit * qty : 0;
+  const jpy = unitRaw !== '' && Number.isFinite(unit) && unit >= 0 ? unit * qty : 0;
   const twd = calcItemTwd(jpy, state.exchangeRate);
   els.sheetLiveTotal.textContent = `${formatJpy(jpy)} → ${formatTwd(twd)}`;
+
+  const twRaw = els.fieldTwPrice.value.trim();
+  const twNum = Number(twRaw);
+  if (unitRaw !== '' && Number.isFinite(unit) && unit >= 0 && twRaw !== '' && Number.isFinite(twNum) && twNum >= 0) {
+    const unitTwd = calcItemTwd(unit, state.exchangeRate);
+    const diff = twNum - unitTwd;
+    els.sheetCompareResult.classList.remove('hidden', 'is-save', 'is-over');
+    if (diff > 0) {
+      els.sheetCompareResult.classList.add('is-save');
+      els.sheetCompareResult.textContent = `✅ 比台灣售價 ${formatTwd(twNum)} 省 ${formatTwd(diff)}／個（日圓折合 ${formatTwd(unitTwd)}）`;
+    } else if (diff === 0) {
+      els.sheetCompareResult.classList.add('is-save');
+      els.sheetCompareResult.textContent = `✅ 與台灣售價 ${formatTwd(twNum)} 同價（日圓折合 ${formatTwd(unitTwd)}）`;
+    } else {
+      els.sheetCompareResult.classList.add('is-over');
+      els.sheetCompareResult.textContent = `⚠️ 比台灣售價 ${formatTwd(twNum)} 貴 ${formatTwd(Math.abs(diff))}／個（日圓折合 ${formatTwd(unitTwd)}）`;
+    }
+  } else {
+    els.sheetCompareResult.classList.add('hidden');
+  }
 }
 
 function renderQuickChips(container, values, currentVal, onSelect) {
@@ -785,9 +867,10 @@ function openItemSheet(itemId = null) {
   const editingItem = itemId ? state.items.find((it) => it.id === itemId) : null;
 
   if (editingItem) {
-    els.sheetTitle.textContent = editingItem.isExtra ? '編輯額外代購' : '編輯與實買紀錄';
+    els.sheetTitle.textContent = editingItem.isExtra ? '編輯自訂商品' : '編輯與實買紀錄';
     state.draftImageBlob = editingItem.imageBlob instanceof Blob ? editingItem.imageBlob : null;
     els.fieldName.value = editingItem.name;
+    els.fieldTwPrice.value = editingItem.twPrice ?? '';
     els.fieldActualPrice.value = editingItem.actualPrice ?? '';
     els.fieldTargetPrice.value = editingItem.targetPrice ?? '';
     els.fieldActualQty.value = String(editingItem.actualQty ?? 0);
@@ -799,15 +882,16 @@ function openItemSheet(itemId = null) {
     els.fieldNote.value = editingItem.note || '';
     els.btnDeleteItem.classList.remove('hidden');
   } else {
-    els.sheetTitle.textContent = '新增額外代購';
+    els.sheetTitle.textContent = '新增代購商品';
     state.draftImageBlob = null;
     els.fieldName.value = '';
+    els.fieldTwPrice.value = '';
     els.fieldActualPrice.value = '';
     els.fieldTargetPrice.value = '';
-    els.fieldActualQty.value = '1';
+    els.fieldActualQty.value = '0';
     els.fieldTargetQty.value = '1';
-    els.fieldIsPurchased.checked = true;
-    els.fieldRequester.value = '自己';
+    els.fieldIsPurchased.checked = false;
+    els.fieldRequester.value = '';
     els.fieldPurchasedStore.value = state.filters.store !== 'ALL' ? state.filters.store : '';
     els.fieldStores.value = state.filters.store !== 'ALL' ? state.filters.store : '';
     els.fieldNote.value = '';
@@ -815,10 +899,16 @@ function openItemSheet(itemId = null) {
   }
 
   renderSheetPhotoPreview(editingItem);
+  updateSheetTwLimitHint();
   updateSheetLiveTotal();
 
-  // 委託人快捷標籤
-  const allRequesters = ['自己', '哥哥', '媽媽', '妹妹', ...state.items.map((it) => it.requester)];
+  // 委託人快捷標籤（從自訂委託人清單載入）
+  const allRequesters = [
+    ...new Set([
+      ...getRequesterList(),
+      ...(editingItem?.requester ? [editingItem.requester] : [])
+    ])
+  ];
   openQuickRequesterChips(allRequesters);
 
   // 實際購買店家快捷標籤（優先此商品候選店家，加上全清單常見店家）
@@ -834,7 +924,8 @@ function openItemSheet(itemId = null) {
 
 function openQuickRequesterChips(allRequesters) {
   renderQuickChips(els.requesterQuickChips, allRequesters, els.fieldRequester.value.trim(), (val) => {
-    els.fieldRequester.value = val;
+    const current = els.fieldRequester.value.trim();
+    els.fieldRequester.value = current === val ? '' : val;
     openQuickRequesterChips(allRequesters);
   });
 }
@@ -893,14 +984,19 @@ async function handleSaveSheet(event) {
     return;
   }
 
+  const twPriceRaw = els.fieldTwPrice.value.trim();
   const targetPriceRaw = els.fieldTargetPrice.value.trim();
   const actualPriceRaw = els.fieldActualPrice.value.trim();
-  const targetPrice = targetPriceRaw === '' ? null : Math.max(0, Number(targetPriceRaw));
+  const twPrice = twPriceRaw === '' ? null : Math.max(0, Number(twPriceRaw));
+  let targetPrice = targetPriceRaw === '' ? null : Math.max(0, Number(targetPriceRaw));
+  if (targetPrice === null && twPrice !== null && state.exchangeRate > 0) {
+    targetPrice = Math.floor(twPrice / state.exchangeRate);
+  }
   const actualPrice = actualPriceRaw === '' ? null : Math.max(0, Number(actualPriceRaw));
   const targetQty = Math.max(1, Math.floor(Number(els.fieldTargetQty.value) || 1));
   const actualQty = Math.max(0, Math.floor(Number(els.fieldActualQty.value) || 0));
   const isPurchased = els.fieldIsPurchased.checked;
-  const requester = els.fieldRequester.value.trim() || '自己';
+  const requester = els.fieldRequester.value.trim();
   const purchasedStore = els.fieldPurchasedStore.value.trim();
   let stores = normalizeStores(els.fieldStores.value);
   if (purchasedStore && !stores.includes(purchasedStore) && !state.editingId) {
@@ -915,12 +1011,14 @@ async function handleSaveSheet(event) {
     if (name !== existing.name) editedSet.add('name');
     if (state.draftRemoveOriginalImage) editedSet.add('image');
     if (JSON.stringify(stores) !== JSON.stringify(existing.stores || [])) editedSet.add('stores');
+    if (twPrice !== existing.twPrice) editedSet.add('twPrice');
 
     const updated = normalizeItem({
       ...existing,
       name,
       image: state.draftRemoveOriginalImage ? '' : existing.image,
       imageBlob: state.draftImageBlob,
+      twPrice,
       targetPrice,
       actualPrice,
       targetQty,
@@ -941,6 +1039,7 @@ async function handleSaveSheet(event) {
       name,
       image: '',
       imageBlob: state.draftImageBlob,
+      twPrice,
       targetPrice,
       actualPrice,
       targetQty,
@@ -954,7 +1053,7 @@ async function handleSaveSheet(event) {
     }, true);
 
     await putItem(extraItem);
-    showToast('已新增額外代購至本機');
+    showToast('已新增代購商品至本機');
   }
 
   closeItemSheet();
@@ -1326,6 +1425,10 @@ function bindEvents() {
     syncPurchasedSwitchFromQty();
   });
 
+  els.fieldTwPrice.addEventListener('input', () => {
+    updateSheetTwLimitHint();
+    updateSheetLiveTotal();
+  });
   els.fieldActualPrice.addEventListener('input', updateSheetLiveTotal);
   els.fieldActualQty.addEventListener('input', () => {
     syncPurchasedSwitchFromQty();
@@ -1427,6 +1530,45 @@ function bindEvents() {
   for (const btn of els.themeSelectorBtns) {
     btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
   }
+
+  // 委託人清單管理
+  const addNewRequester = () => {
+    const name = els.inputNewRequester.value.trim();
+    if (!name) return;
+    const current = getRequesterList();
+    if (current.includes(name)) {
+      showToast(`「${name}」已在清單中`);
+      return;
+    }
+    setRequesterList([...current, name]);
+    els.inputNewRequester.value = '';
+    renderRequesterSettings();
+    showToast(`已新增委託人：${name}`);
+  };
+
+  els.btnAddRequester.addEventListener('click', addNewRequester);
+  els.inputNewRequester.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addNewRequester();
+    }
+  });
+
+  els.settingsRequesterList.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-remove-requester]');
+    if (!btn) return;
+    const target = btn.dataset.removeRequester;
+    const next = getRequesterList().filter((n) => n !== target);
+    setRequesterList(next);
+    renderRequesterSettings();
+    showToast(`已移除委託人：${target}`);
+  });
+
+  els.btnResetRequesters.addEventListener('click', () => {
+    resetRequesterList();
+    renderRequesterSettings();
+    showToast('已恢復預設委託人清單');
+  });
 
   els.btnResetAll.addEventListener('click', handleResetAll);
 }

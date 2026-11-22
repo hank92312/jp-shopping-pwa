@@ -4,14 +4,16 @@ const DB_NAME = 'jp_shopping_db';
 const DB_VERSION = 1;
 const STORE_ITEMS = 'items';
 
-export const DEFAULT_EXCHANGE_RATE = 0.215;
+export const DEFAULT_EXCHANGE_RATE = 0.201;
+export const DEFAULT_REQUESTERS = ['哥哥', '佩芳', '冠州', '媽媽', '旺調'];
 
 const LS_KEYS = {
   exchangeRate: 'jp_shop_exchange_rate',
   itemsVersion: 'jp_shop_items_version',
   filterPrefs: 'jp_shop_filter_prefs',
   theme: 'jp_shop_theme',
-  deletedStaticIds: 'jp_shop_deleted_static_ids'
+  deletedStaticIds: 'jp_shop_deleted_static_ids',
+  requesters: 'jp_shop_requesters'
 };
 
 let dbPromise = null;
@@ -224,6 +226,31 @@ export function clearDeletedStaticIds(idsToKeep = null) {
   localStorage.setItem(LS_KEYS.deletedStaticIds, JSON.stringify([...idsToKeep]));
 }
 
+export function getRequesterList() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(LS_KEYS.requesters) || 'null');
+    if (Array.isArray(parsed)) {
+      return [...new Set(parsed.map((s) => String(s).trim()).filter(Boolean))];
+    }
+  } catch {
+    // ignore parse error
+  }
+  return [...DEFAULT_REQUESTERS];
+}
+
+export function setRequesterList(arr) {
+  const cleaned = Array.isArray(arr)
+    ? [...new Set(arr.map((s) => String(s).trim()).filter(Boolean))]
+    : [...DEFAULT_REQUESTERS];
+  localStorage.setItem(LS_KEYS.requesters, JSON.stringify(cleaned));
+  return cleaned;
+}
+
+export function resetRequesterList() {
+  localStorage.removeItem(LS_KEYS.requesters);
+  return [...DEFAULT_REQUESTERS];
+}
+
 // ---------- 資料正規化與無損合併 ----------
 
 function toNullableNonNegNumber(val) {
@@ -269,13 +296,14 @@ export function normalizeItem(raw, isExtraDefault = false) {
     name: String(raw.name || '').trim(),
     image: typeof raw.image === 'string' ? raw.image : '',
     imageBlob: raw.imageBlob instanceof Blob ? raw.imageBlob : null,
+    twPrice: toNullableNonNegNumber(raw.twPrice),
     targetPrice: toNullableNonNegNumber(raw.targetPrice),
     actualPrice: toNullableNonNegNumber(raw.actualPrice),
     targetQty: toPositiveInt(raw.targetQty, 1),
     actualQty: toNonNegInt(raw.actualQty, 0),
     stores: normalizeStores(raw.stores),
     purchasedStore: typeof raw.purchasedStore === 'string' ? raw.purchasedStore.trim() : '',
-    requester: typeof raw.requester === 'string' && raw.requester.trim() ? raw.requester.trim() : '自己',
+    requester: typeof raw.requester === 'string' ? raw.requester.trim() : '',
     note: typeof raw.note === 'string' ? raw.note : '',
     isPurchased: Boolean(raw.isPurchased),
     isExtra: typeof raw.isExtra === 'boolean' ? raw.isExtra : isExtraDefault,
@@ -353,6 +381,12 @@ export async function mergeStaticData(jsonData, { isManualImport = false } = {})
       changed = true;
     }
 
+    const incomingTwPrice = toNullableNonNegNumber(raw.twPrice);
+    if (!edited.has('twPrice') && incomingTwPrice !== existing.twPrice) {
+      next.twPrice = incomingTwPrice;
+      changed = true;
+    }
+
     if (changed) {
       next.updatedAt = Date.now();
       toPut.push(next);
@@ -423,6 +457,7 @@ export async function buildFullBackupData() {
     exportedAt: new Date().toISOString(),
     itemsVersion: getItemsVersion(),
     exchangeRate: getExchangeRate(),
+    requesters: getRequesterList(),
     deletedStaticIds: [...getDeletedStaticIds()],
     items: serializedItems
   };
@@ -460,6 +495,9 @@ export async function restoreFullBackup(backupJson, mode = 'replace') {
     } else {
       clearDeletedStaticIds();
     }
+    if (Array.isArray(backupJson.requesters)) {
+      setRequesterList(backupJson.requesters);
+    }
     return { count: restoredItems.length, mode };
   }
 
@@ -494,6 +532,7 @@ export function buildStaticTemplateData(items) {
       id: it.id,
       name: it.name,
       image: it.image || '',
+      twPrice: it.twPrice,
       targetPrice: it.targetPrice,
       targetQty: it.targetQty,
       stores: it.stores,

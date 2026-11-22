@@ -569,6 +569,24 @@ button {
   font-weight: 600;
 }
 
+.price-save {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--success-text);
+  background: var(--success-soft);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.price-over {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--danger-text);
+  background: var(--danger-soft);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
 .qty-text {
   font-size: 0.82rem;
   color: var(--text-muted);
@@ -914,6 +932,61 @@ button {
   margin-bottom: 8px;
 }
 
+/* 委託人清單管理 */
+.requester-manage-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.requester-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  padding: 0 4px 0 12px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.requester-chip-del {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary-text);
+}
+
+.requester-chip-del:active {
+  background: rgba(15, 23, 42, 0.12);
+}
+
+.requester-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.requester-add-row input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
 /* ==================== 按鈕共用樣式 ==================== */
 .btn {
   display: inline-flex;
@@ -1229,6 +1302,23 @@ button {
   font-size: 1rem;
   font-weight: 800;
   color: var(--primary-text);
+}
+
+.compare-bar {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.compare-bar.is-save {
+  background: var(--success-soft);
+  color: var(--success-text);
+}
+
+.compare-bar.is-over {
+  background: var(--danger-soft);
+  color: var(--danger-text);
 }
 
 .toggle-switch {

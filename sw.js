@@ -1,5 +1,5 @@
-const APP_CACHE = 'jp-shop-app-v1';
-const IMG_CACHE = 'jp-shop-img-v1';
+const APP_CACHE = 'jp-shop-app-v2';
+const IMG_CACHE = 'jp-shop-img-v2';
 
 const APP_SHELL_PATHS = [
   './',

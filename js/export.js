@@ -35,6 +35,45 @@ export function formatTwd(amount) {
 }
 
 /**
+ * 計算比台灣划算的日本單價上限（JPY）；若無台灣售價則回傳 targetPrice
+ * @param {object} item
+ * @param {number} exchangeRate
+ * @returns {number|null}
+ */
+export function getJpyLimit(item, exchangeRate) {
+  const rate = Number(exchangeRate) || 0;
+  if (item.twPrice !== null && item.twPrice !== undefined && rate > 0) {
+    return Math.floor(Number(item.twPrice) / rate);
+  }
+  return item.targetPrice ?? null;
+}
+
+/**
+ * 比較日本實買單價（無條件進位為台幣後）與台灣售價之價差
+ * @param {object} item
+ * @param {number|null|undefined} unitJpy
+ * @param {number} exchangeRate
+ * @returns {{twPrice: number, unitTwd: number, diff: number}|null}
+ */
+export function compareWithTaiwan(item, unitJpy, exchangeRate) {
+  if (
+    item.twPrice === null ||
+    item.twPrice === undefined ||
+    unitJpy === null ||
+    unitJpy === undefined
+  ) {
+    return null;
+  }
+  const twPrice = Number(item.twPrice);
+  const unitTwd = calcItemTwd(Number(unitJpy), exchangeRate);
+  return {
+    twPrice,
+    unitTwd,
+    diff: twPrice - unitTwd
+  };
+}
+
+/**
  * 計算結帳統計與依委託人分組明細（納入所有 actualQty > 0 之品項）
  * @param {Array<object>} items
  * @param {number} exchangeRate
@@ -88,10 +127,12 @@ export function computeCheckoutStats(items, exchangeRate) {
     if (!hasPrice) group.missingPriceCount += 1;
   }
 
-  // 將「自己」排最後或金額高者優先，方便向親友請款
+  // 將「未指定」與「自己」排最後，方便向親友請款
+  const isTail = (name) => name === '未指定' || name === '自己';
   const groups = [...groupMap.values()].sort((a, b) => {
-    if (a.requester === '自己' && b.requester !== '自己') return 1;
-    if (b.requester === '自己' && a.requester !== '自己') return -1;
+    const aTail = isTail(a.requester);
+    const bTail = isTail(b.requester);
+    if (aTail !== bTail) return aTail ? 1 : -1;
     return b.groupTwd - a.groupTwd || a.requester.localeCompare(b.requester, 'zh-Hant');
   });
 
@@ -179,6 +220,7 @@ export function generateCsvContent(items, exchangeRate) {
     '類型',
     '委託人',
     '店家',
+    '台灣售價(TWD)',
     '參考單價(JPY)',
     '實買單價(JPY)',
     '實買數量',
@@ -209,6 +251,7 @@ export function generateCsvContent(items, exchangeRate) {
       item.isExtra ? '額外代購' : '預定清單',
       item.requester || '未指定',
       storeText,
+      item.twPrice ?? '',
       item.targetPrice ?? '',
       hasPrice ? item.actualPrice : '',
       qty,
