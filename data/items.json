@@ -1,5 +1,5 @@
 {
-  "version": "2026.11.24.01",
+  "version": "2026.11.26.01",
   "defaultExchangeRate": 0.201,
   "items": [
     {
@@ -105,8 +105,8 @@
     },
     {
       "id": "jp_010",
-      "name": "UNIQLO:C 女款 棉質直筒褲 69 Navy S（スウェットストレートパンツ 241-483285）",
-      "image": "./assets/images/jp_010.webp",
+      "name": "UNIQLO:C 女款 棉質直筒褲 39 Dark Brown 深棕色 S（スウェットストレートパンツ 241-483285）",
+      "image": "./assets/images/jp_010_39.webp",
       "twPrice": 990,
       "targetPrice": 4925,
       "targetQty": 1,
@@ -114,7 +114,7 @@
         "UNIQLO"
       ],
       "requester": "媽媽",
-      "note": "台灣 UNIQLO 官網售價 NT$990；JP 吊牌 ¥3,990；尺寸 S（腰圍 61-67cm）、色號 69 Navy"
+      "note": "台灣 UNIQLO 官網售價 NT$990；JP 吊牌 ¥3,990；尺寸 S（腰圍 61-67cm）、色號 39 Dark Brown（深棕色）"
     },
     {
       "id": "jp_011",
